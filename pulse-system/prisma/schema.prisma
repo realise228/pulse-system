@@ -1,0 +1,218 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  firstName     String
+  lastName      String
+  avatar        String?
+  roleId        String
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  role          Role          @relation(fields: [roleId], references: [id])
+  employee      Employee?
+  chatMessages  ChatMessage[]
+  chatMembers   ChatMember[]
+  createdChats  Chat[]
+  notifications Notification[]
+  
+  @@map("users")
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  description String?
+  permissions Permission[]
+  users       User[]
+  
+  @@map("roles")
+}
+
+model Permission {
+  id       String @id @default(uuid())
+  roleId   String
+  resource String
+  action   String
+  
+  role     Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  
+  @@unique([roleId, resource, action])
+  @@map("permissions")
+}
+
+model Employee {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  employeeId       String   @unique
+  position         String
+  department       String
+  phone            String?
+  birthDate        DateTime?
+  hireDate         DateTime
+  salary           Decimal?
+  skills           String[]
+  address          String?
+  emergencyContact String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("employees")
+}
+
+model Chat {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  type        String   @default("group")
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  creator     User          @relation(fields: [createdBy], references: [id])
+  members     ChatMember[]
+  messages    ChatMessage[]
+  
+  @@map("chats")
+}
+
+model ChatMember {
+  id       String   @id @default(uuid())
+  chatId   String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  chat     Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([chatId, userId])
+  @@map("chat_members")
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  chatId    String
+  userId    String
+  content   String
+  type      String   @default("text")
+  createdAt DateTime @default(now())
+
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("chat_messages")
+}
+
+model InfoBank {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  category    String
+  tags        String[]
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items       InfoItem[]
+  
+  @@map("info_banks")
+}
+
+model InfoItem {
+  id        String   @id @default(uuid())
+  bankId    String
+  title     String
+  content   String
+  tags      String[]
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bank      InfoBank @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  
+  @@map("info_items")
+}
+
+model CrmTemplate {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  modules     Json
+  config      Json
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  exports     CrmExport[]
+  
+  @@map("crm_templates")
+}
+
+model CrmExport {
+  id         String   @id @default(uuid())
+  templateId String
+  format     String
+  content    String
+  createdAt  DateTime @default(now())
+
+  template   CrmTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  
+  @@map("crm_exports")
+}
+
+model AnalyticsDashboard {
+  id        String   @id @default(uuid())
+  name      String
+  createdBy String
+  config    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  widgets   AnalyticsWidget[]
+  
+  @@map("analytics_dashboards")
+}
+
+model AnalyticsWidget {
+  id              String   @id @default(uuid())
+  dashboardId     String
+  type            String
+  title           String
+  config          Json
+  position        Json
+  dataSource      String
+  refreshInterval Int?
+  createdAt       DateTime @default(now())
+
+  dashboard       AnalyticsDashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+  
+  @@map("analytics_widgets")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  data      Json?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("notifications")
+}

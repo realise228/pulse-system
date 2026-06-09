@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: PULSE API
+  version: 1.0.0
+  description: Enterprise Management System
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        200:
+          description: OK
+  /employees:
+    get:
+      tags: [Employees]
+      summary: Get all employees
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: OK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
