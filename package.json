@@ -11,7 +11,16 @@
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:seed": "ts-node prisma/seed.ts"
   },
-  "keywords": ["pulse", "enterprise", "crm", "1c"],
+  "keywords": [
+    "pulse",
+    "enterprise",
+    "crm",
+    "1c"
+  ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@prisma/client": "^5.22.0",
+    "prisma": "^5.22.0"
+  }
 }
