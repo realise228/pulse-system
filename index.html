@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSE System — In-House Platform</title>
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --surface: #F4F9FA;
+            --primary: #006B80;
+            --accent: #22B6AF;
+            --dark: #0E1719;
+            --font: 'Times New Roman', 'Georgia', serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font);
+            background: radial-gradient(ellipse at center, #FFFFFF 0%, #F4F9FA 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .logo {
+            font-size: 120px;
+            font-weight: 900;
+            color: var(--dark);
+            letter-spacing: 20px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .logo-sub {
+            font-size: 18px;
+            color: var(--primary);
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+        .info-box {
+            background: var(--surface);
+            border: 1px solid #D0E4E8;
+            border-radius: 12px;
+            padding: 30px 40px;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .info-box p {
+            font-size: 17px;
+            color: #5a7a80;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 900px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        .feat {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #D0E4E8;
+        }
+        .feat .icon { font-size: 28px; margin-bottom: 8px; }
+        .feat .name { font-size: 14px; font-weight: 700; color: var(--dark); }
+        .feat .desc { font-size: 12px; color: #5a7a80; margin-top: 4px; }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #8aa8ac;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">PULSE</div>
+    <div class="logo-sub">In-House System</div>
+    <div class="title">Коммуникативный модуль</div>
+    
+    <div class="info-box">
+        <p>Демо-версия системы. Серверная часть работает локально.</p>
+        <p>Ниже представлены реализованные модули.</p>
+    </div>
+
+    <div class="features">
+        <div class="feat">
+            <div class="icon">◈</div>
+            <div class="name">Чаты</div>
+            <div class="desc">WebSocket, групповые чаты</div>
+        </div>
+        <div class="feat">
+            <div class="icon">▣</div>
+            <div class="name">База знаний</div>
+            <div class="desc">Банки, документы, поиск</div>
+        </div>
+        <div class="feat">
+            <div class="icon">☰</div>
+            <div class="name">Сотрудники</div>
+            <div class="desc">Справочник, фильтры, Excel</div>
+        </div>
+        <div class="feat">
+            <div class="icon">⬡</div>
+            <div class="name">Аналитика</div>
+            <div class="desc">Графики, отчёты, KPI</div>
+        </div>
+        <div class="feat">
+            <div class="icon">⌬</div>
+            <div class="name">CRM 1С</div>
+            <div class="desc">Конструктор, XML-экспорт</div>
+        </div>
+        <div class="feat">
+            <div class="icon">🔔</div>
+            <div class="name">Уведомления</div>
+            <div class="desc">Система оповещений</div>
+        </div>
+        <div class="feat">
+            <div class="icon">🔍</div>
+            <div class="name">Поиск</div>
+            <div class="desc">Meilisearch, глобальный</div>
+        </div>
+        <div class="feat">
+            <div class="icon">🛡</div>
+            <div class="name">Роли</div>
+            <div class="desc">Директор, менеджер, сотрудник</div>
+        </div>
+    </div>
+
+    <div class="footer">Тула • 2025</div>
+</body>
+</html>
